@@ -1,4 +1,4 @@
-import vueWeekPicker from './components/VueWeekPicker.vue'
+import vueWeekPicker from './VueWeekPicker.vue'
 
 const VueWeekPicker = {
   install: function (Vue) {

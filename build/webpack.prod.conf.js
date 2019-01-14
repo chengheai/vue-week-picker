@@ -25,6 +25,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '',
+    filename: '[name].min.js',
     library: 'VueWeekPicker',
     libraryTarget: 'umd',
     umdNamedDefine: true
