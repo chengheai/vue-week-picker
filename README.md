@@ -1,18 +1,24 @@
 # vue-week-picker
 
-> A Vue.js project
+> vue-week-picker
+## 功能
+*自适应式按周切换
+## 结合Element-ui使用
 
-## Build Setup
+这是写的组件，\[请转到](https://github.com/chengheai/daily-vue-demo/blob/master/src/components/Calendar.vue)
+[](https://github.com/chengheai/review-demo-image/blob/master/2019-01-15%2014-03-05.2019-01-15%2014_03_49.gif)
+## 效果
+[](https://github.com/chengheai/review-demo-image/blob/master/2019-01-15%2014-00-09.2019-01-15%2014_01_04.gif)
+## 使用
+``` javascript
+<VueWeekPicker @dateValue="dateValue" />
 
-``` bash
-# install dependencies
-npm install
+import VueWeekPicker from 'vue-week-picker';
 
-# serve with hot reload at localhost:8080
-npm run dev
+export default {
+  components: {
+    VueWeekPicker
+  }
+}
 
-# build for production with minification
-npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
