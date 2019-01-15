@@ -1,7 +1,7 @@
 {
   "name": "vue-week-picker",
   "description": "A Vue.js project",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "author": "chengheai <842385139@qq.com>",
   "main": "dist/vue-week-picker.js",
   "license": "MIT",
