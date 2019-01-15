@@ -1,6 +1,10 @@
 # vue-week-picker
 
 > vue-week-picker
+ ## 安装
+ ``` bash
+  npm install vue-week-picker --save-dev
+ ```
 ## DEMO
 * 原生
 [线上DEMO👅 🦊 🐸 🚎 ](https://chengheai.github.io/daily-vue-demo/#/calendar1)
