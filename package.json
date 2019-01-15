@@ -1,7 +1,7 @@
 {
   "name": "vue-week-picker",
   "description": "A Vue.js project",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "author": "chengheai <842385139@qq.com>",
   "main": "dist/vue-week-picker.js",
   "license": "MIT",
@@ -29,16 +29,16 @@
   "homepage": "https://github.com/chengheai/vue-week-picker/blob/master/README.md",
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^8.0.5",
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
-    "file-loader": "^1.1.4",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
     "node-sass": "^4.5.3",
-    "vue-loader": "^13.0.5",
+    "vue-loader": "^15.5.1",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack": "^4.28.4",
+    "webpack-dev-server": "^3.1.14"
   }
 }
