@@ -1,74 +1,48 @@
 <template>
   <div class="date">
-    <el-row>
-      <el-col :span="24">
-        <div class="weeks">
-          <!-- 日期 -->
-          <ul class="days">
-            <li @click="weekPre" class="prev-btn">
-              <i class="fa fa-angle-left fa-icon" aria-hidden="true"></i>
-              <span class="hidden-sm-and-down" style="margin-left: 5px;">上一周</span>
-            </li>
-            <li
-              class="date-item"
-              @click="pick(day, index)"
-              v-for="(day, index) in days"
-              :key="index"
-              :class="{selected: index == tabIndex}"
-            >
-              <!--本月-->
-              <span v-if="day.getMonth()+1 != currentMonth" class="other-month item-wrapper">
-                <p>{{day | getWeekFormat}}</p>
-                <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
-              </span>
-              <span v-else>
-                <!--今天-->
-                <span
-                  v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()"
-                  class="today-item"
-                >今天</span>
-                <span class="item-wrapper" v-else>
-                  <p>{{day | getWeekFormat}}</p>
-                  <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
-                </span>
-              </span>
-            </li>
-            <li @click="weekNext" class="next-btn">
-              <span class="hidden-sm-and-down" style="margin-right: 5px;">下一周</span>
-              <i class="fa fa-angle-right fa-icon" aria-hidden="true"></i>
-            </li>
-            <li>
-              <span>
-                <el-date-picker
-                  class="right-pick-btn"
-                  style="width: 100%"
-                  :clearable=false
-                  @change="pickDate"
-                  v-model="newDate"
-                  type="date"
-                  placeholder="按日期查询"
-                ></el-date-picker>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="20" :offset="2" class="time-range">
-        <span
-          @click="pickTime(time, index)"
-          v-for="(time, index) in times"
+    <div class="weeks">
+      <!-- 日期 -->
+      <ul class="days">
+        <li @click="weekPre" class="prev-btn">
+          <i class='arr-left'></i>
+          <span class="hidden-sm-and-down" style="margin-left: 5px;">上一周</span>
+        </li>
+        <li
+          class="date-item"
+          @click="pick(day, index)"
+          v-for="(day, index) in days"
           :key="index"
-          :class="{active:index == tabTimeIndex}"
-        >{{time.label}}</span>
-      </el-col>
-    </el-row>
+          :class="{selected: index == tabIndex}"
+        >
+          <!--本月-->
+          <span v-if="day.getMonth()+1 != currentMonth" class="other-month item-wrapper">
+            <p>{{day | getWeekFormat}}</p>
+            <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
+          </span>
+          <span v-else>
+            <!--今天-->
+            <span
+              v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()"
+              class="today-item"
+            >今天</span>
+            <span class="item-wrapper" v-else>
+              <p>{{day | getWeekFormat}}</p>
+              <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
+            </span>
+          </span>
+        </li>
+        <li @click="weekNext" class="next-btn">
+          <span class="hidden-sm-and-down" style="margin-right: 5px;">下一周</span>
+          <i class="arr-right"></i>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import _ from 'lodash';
 import moment from "moment";
 export default {
   props: {
@@ -88,17 +62,8 @@ export default {
       currentDay: 1, // 日期
       currentWeek: 1, // 星期
       days: [],
-      value1: "",
       tabIndex: null,
-      newDate: moment(new Date()).format("YYYY-MM-DD"),
-      tabTimeIndex: 4,
-      times: [
-        { time: "00:00:00~06:00:00", label: "00:00~06:00" },
-        { time: "06:00:00~12:00:00", label: "06:00~12:00" },
-        { time: "12:00:00~18:00:00", label: "12:00~18:00" },
-        { time: "18:00:00~24:00:00", label: "18:00~24:00" },
-        { time: "00:00:00~24:00:00", label: "今日节目" }
-      ]
+      newDate: moment(new Date()).format("YYYY-MM-DD")
     };
   },
   filters: {
@@ -226,24 +191,10 @@ export default {
     pick(date, index) {
       this.newDate = moment(date).format("YYYY-MM-DD");
       this.$emit("dateValue", this.newDate);
+      console.log('this.newDate: ', this.newDate);
       // console.log("index: ", index);
       this.tabIndex = index;
-      // alert(
-      //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
-      // );
     },
-    pickTime(time, index) {
-      // console.log('time: ', time);
-      let timeArr = [];
-      timeArr.push(_.split(time.time, "~"));
-      // console.log("timeArr: ", timeArr);
-      this.$emit("timeValue", _.join(timeArr), "");
-      // console.log("index: ", index);
-      this.tabTimeIndex = index;
-      // alert(
-      //   this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate())
-      // );
-    }
   }
 };
 </script>
@@ -255,6 +206,9 @@ export default {
       padding: 5px 0 !important;
     }
   }
+}
+.weeks {
+  width: 100%;
 }
 .today-item {
   cursor: pointer;
@@ -303,9 +257,6 @@ export default {
       cursor: pointer;
       padding-bottom: 5px;
       border-bottom: 3px solid #fff;
-      .active {
-        border-bottom: 3px solid #409eff;
-      }
       &:hover {
         border-bottom: 3px solid rgb(151, 198, 245);
       }
@@ -313,9 +264,26 @@ export default {
         border-bottom: 3px solid rgb(151, 198, 245);
       }
     }
+    .active {
+      border-bottom: 3px solid #409eff;
+    }
   }
   .days {
     display: flex;
+    .arr-right{
+      width: 7px;
+      height: 7px;
+      border-top: 2px solid #6e6a6a;
+      border-right: 2px solid #6e6a6a;
+      transform: rotate(45deg);
+    }
+    .arr-left{
+      width: 7px;
+      height: 7px;
+      border-top: 2px solid #6e6a6a;
+      border-left: 2px solid #6e6a6a;
+      transform: rotate(-45deg);
+    }
     li {
       cursor: pointer;
       padding: 5px 10px;

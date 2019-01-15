@@ -1,7 +1,7 @@
 {
   "name": "vue-week-picker",
   "description": "A Vue.js project",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "author": "chengheai <842385139@qq.com>",
   "main": "dist/vue-week-picker.js",
   "license": "MIT",
@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "vue": "^2.5.11",
-    "element-ui": "^2.4.11",
     "lodash": "^4.17.11",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
