@@ -199,12 +199,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="css" scoped>
 @media screen and (max-width: 1300px) {
-  .days {
-    li {
-      padding: 5px 0 !important;
-    }
+  .days li {
+    padding: 5px 0 !important;
   }
 }
 .weeks {
@@ -232,84 +230,71 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  // padding: 5px 10px;
-  // border: 1px solid #ccc;
-  .fa-icon {
-    font-size: 18px;
-  }
 }
-.right-pick-btn {
-  // height: 55px;
-  // .el-input--small .el-input__inner{
-  //   height: 100%;
-  // }
+.prev-btn .fa-icon,
+.next-btn .fa-icon {
+  font-size: 18px;
 }
-
 .date {
   font-size: 14px;
   margin-top: 15px;
-  .time-range {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    span {
-      cursor: pointer;
-      padding-bottom: 5px;
-      border-bottom: 3px solid #fff;
-      &:hover {
-        border-bottom: 3px solid rgb(151, 198, 245);
-      }
-      &:active {
-        border-bottom: 3px solid rgb(151, 198, 245);
-      }
-    }
-    .active {
-      border-bottom: 3px solid #409eff;
-    }
-  }
-  .days {
-    display: flex;
-    .arr-right{
-      width: 7px;
-      height: 7px;
-      border-top: 2px solid #6e6a6a;
-      border-right: 2px solid #6e6a6a;
-      transform: rotate(45deg);
-    }
-    .arr-left{
-      width: 7px;
-      height: 7px;
-      border-top: 2px solid #6e6a6a;
-      border-left: 2px solid #6e6a6a;
-      transform: rotate(-45deg);
-    }
-    li {
-      cursor: pointer;
-      padding: 5px 10px;
-      border: 1px solid #ccc;
-      border-right: none;
-      list-style: none;
-      flex: 1;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .other-month {
-        // color: #c0c4cc;
-      }
-    }
-    .date-item {
-      &:hover {
-        background: #dff0d8;
-      }
-      &:active {
-        background: #dff0d8;
-      }
-    }
-    li:nth-last-child(1) {
-      border-right: 1px solid #ccc;
-    }
-  }
+}
+.date .time-range {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+}
+.date .time-range span {
+  cursor: pointer;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #fff;
+}
+.date .time-range span:hover {
+  border-bottom: 3px solid #97c6f5;
+}
+.date .time-range span:active {
+  border-bottom: 3px solid #97c6f5;
+}
+.date .time-range .active {
+  border-bottom: 3px solid #409eff;
+}
+.date .days {
+  display: flex;
+}
+.date .days .arr-right {
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #6e6a6a;
+  border-right: 2px solid #6e6a6a;
+  transform: rotate(45deg);
+}
+.date .days .arr-left {
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #6e6a6a;
+  border-left: 2px solid #6e6a6a;
+  transform: rotate(-45deg);
+}
+.date .days li {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-right: none;
+  list-style: none;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.date .days .date-item:hover {
+  background: #dff0d8;
+}
+.date .days .date-item:active {
+  background: #dff0d8;
+}
+.date .days li:nth-last-child(1) {
+  border-right: 1px solid #ccc;
 }
 </style>
