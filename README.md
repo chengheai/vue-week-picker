@@ -18,9 +18,9 @@
 ## 使用
 ``` javascript
 <VueWeekPicker @dateValue="dateValue" />
-<font color="#0000dd">
+
 Or
-</font>
+
 <vue-week-picker @dateValue="dateValue" />
 
 import VueWeekPicker from 'vue-week-picker';
@@ -30,9 +30,9 @@ export default {
     VueWeekPicker
   }
 }
-<font color="#0000dd">
+
 Or
-</font>
+
 export default {
   components: {
     'vue-week-picker': VueWeekPicker
