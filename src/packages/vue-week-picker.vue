@@ -1,7 +1,6 @@
 <template>
   <div class="date">
     <div class="weeks">
-      <!-- 日期 -->
       <ul class="days">
         <li @click="weekPre" class="prev-btn">
           <i class='arr-left'></i>
@@ -14,13 +13,11 @@
           :key="index"
           :class="{selected: index == tabIndex}"
         >
-          <!--本月-->
           <span v-if="day.getMonth()+1 != currentMonth" class="other-month item-wrapper">
             <p>{{day | getWeekFormat}}</p>
             <span class="hidden-sm-and-down">{{ day | dateFormat }}</span>
           </span>
           <span v-else>
-            <!--今天-->
             <span
               v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()"
               class="today-item"
@@ -41,44 +38,44 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import _ from 'lodash';
-import moment from "moment";
+import moment from 'moment';
 export default {
   props: {
     dateValue: {
       type: String,
-      default: moment(new Date()).format("YYYY-MM-DD")
+      default: moment(new Date()).format('YYYY-MM-DD')
     },
     timeValue: {
       type: String,
-      default: "00:00"
+      default: '00:00'
     }
   },
   data() {
     return {
-      currentYear: 1970, // 年份
-      currentMonth: 1, // 月份
-      currentDay: 1, // 日期
-      currentWeek: 1, // 星期
+      currentYear: 1970,
+      currentMonth: 1,
+      currentDay: 1,
+      currentWeek: 1,
       days: [],
       tabIndex: null,
-      newDate: moment(new Date()).format("YYYY-MM-DD")
+      newDate: moment(new Date()).format('YYYY-MM-DD')
     };
   },
   filters: {
     dateFormat(date) {
-      return moment(date).format("YYYY-MM-DD");
+      return moment(date).format('YYYY-MM-DD');
     },
     getWeekFormat(date) {
       const weeksObj = {
-        1: "周一",
-        2: "周二",
-        3: "周三",
-        4: "周四",
-        5: "周五",
-        6: "周六",
-        7: "周日"
+        1: '周一',
+        2: '周二',
+        3: '周三',
+        4: '周四',
+        5: '周五',
+        6: '周六',
+        7: '周日'
       };
       let weekNumber = moment(date).isoWeekday();
       return weeksObj[weekNumber];
@@ -87,11 +84,8 @@ export default {
 
   mounted() {
     const index = _.findIndex(this.days, function(o) {
-      // console.log('o: ', o.getDate());
-      // console.log('new Date().getDate(): ', new Date().getDate());
-      return o.getDate() === new Date().getDate();
+      return moment(o).dayOfYear() === moment().dayOfYear();
     });
-    console.log("index: ", index);
     this.tabIndex = index;
   },
 
@@ -110,27 +104,26 @@ export default {
     },
     pickDate(date) {
       let that = this;
-      that.newDate = moment(date).format("YYYY-MM-DD");
-      that.$emit("dateValue", that.newDate);
-      console.log("this.newDate: ", that.newDate);
+      that.newDate = moment(date).format('YYYY-MM-DD');
+      that.$emit('dateValue', that.newDate);
+      console.log('this.newDate: ', that.newDate);
       that.initData(that.newDate);
       const index = _.findIndex(that.days, function(o) {
         return o.getDate() === new Date(that.newDate).getDate();
       });
-      // console.log("index: ", index);
       this.tabIndex = index;
     },
     initData(cur) {
-      let date = "";
+      let date = '';
       if (cur) {
         date = new Date(cur);
       } else {
         date = new Date();
       }
-      this.currentDay = date.getDate(); // 今日日期 几号
-      this.currentYear = date.getFullYear(); // 当前年份
-      this.currentMonth = date.getMonth() + 1; // 当前月份
-      this.currentWeek = date.getDay(); // 1...6,0  // 星期几
+      this.currentDay = date.getDate();
+      this.currentYear = date.getFullYear();
+      this.currentMonth = date.getMonth() + 1;
+      this.currentWeek = date.getDay();
       if (this.currentWeek === 0) {
         this.currentWeek = 7;
       }
@@ -138,68 +131,41 @@ export default {
         this.currentYear,
         this.currentMonth,
         this.currentDay
-      ); // 今日日期 年-月-日
+      );
       this.days.length = 0;
-      // 今天是周日，放在第一行第7个位置，前面6个 这里默认显示一周，如果需要显示一个月，则第二个循环为 i<= 35- this.currentWeek
-      /* eslint-disabled */
-      // 今天
       for (let i = this.currentWeek - 1; i >= 0; i -= 1) {
         const d = new Date(str);
         d.setDate(d.getDate() - i);
-        // console.log(y:" + d.getDate())
-        // console.log('d: ', d);
         this.days.push(d);
       }
-      // 这个星期
       for (let i = 1; i <= 7 - this.currentWeek; i += 1) {
         const d = new Date(str);
         d.setDate(d.getDate() + i);
         this.days.push(d);
-        // console.log('d1: ', d);
       }
     },
-
-    // 上个星期
     weekPre() {
-      const d = this.days[0]; // 如果当期日期是7号或者小于7号
+      const d = this.days[0];
       d.setDate(d.getDate() - 7);
       this.initData(d);
     },
-
-    // 下个星期
     weekNext() {
-      const d = this.days[6]; // 如果当期日期是7号或者小于7号
+      const d = this.days[6];
       d.setDate(d.getDate() + 7);
       this.initData(d);
     },
-
-    // 上一個月  传入当前年份和月份
-    pickPre(year, month) {
-      const d = new Date(this.formatDate(year, month, 1));
-      d.setDate(0);
-      this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
-    },
-
-    // 下一個月  传入当前年份和月份
-    pickNext(year, month) {
-      const d = new Date(this.formatDate(year, month, 1));
-      d.setDate(35);
-      this.initData(this.formatDate(d.getFullYear(), d.getMonth() + 1, 1));
-    },
-
-    // 当前选择日期
     pick(date, index) {
-      this.newDate = moment(date).format("YYYY-MM-DD");
-      this.$emit("dateValue", this.newDate);
+      this.newDate = moment(date).format('YYYY-MM-DD');
+      this.$emit('dateValue', this.newDate);
       console.log('this.newDate: ', this.newDate);
-      // console.log("index: ", index);
+      console.log('index: ', index);
       this.tabIndex = index;
-    },
+    }
   }
 };
 </script>
 
-<style lang="css" scoped>
+<style lang='css' scoped>
 @media screen and (max-width: 1300px) {
   .days li {
     padding: 5px 0 !important;
