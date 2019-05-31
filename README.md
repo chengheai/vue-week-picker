@@ -3,7 +3,7 @@
 > vue-week-picker
 ## 安装
  ``` bash
-  npm install vue-week-picker --save-dev
+  npm install vue-week-picker --save
  ```
 ## DEMO
 * 原生

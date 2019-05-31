@@ -3,7 +3,7 @@
     <div class="weeks">
       <ul class="days">
         <li @click="weekPre" class="prev-btn">
-          <i class='arr-left'></i>
+          <i class="arr-left"></i>
           <span class="hidden-sm-and-down" style="margin-left: 5px;">上一周</span>
         </li>
         <li
@@ -38,18 +38,17 @@
 </template>
 
 <script>
-
-import _ from 'lodash';
-import moment from 'moment';
+import _ from "lodash";
+import moment from "moment";
 export default {
   props: {
     dateValue: {
       type: String,
-      default: moment(new Date()).format('YYYY-MM-DD')
+      default: moment(new Date()).format("YYYY-MM-DD")
     },
     timeValue: {
       type: String,
-      default: '00:00'
+      default: "00:00"
     }
   },
   data() {
@@ -60,22 +59,22 @@ export default {
       currentWeek: 1,
       days: [],
       tabIndex: null,
-      newDate: moment(new Date()).format('YYYY-MM-DD')
+      newDate: moment(new Date()).format("YYYY-MM-DD")
     };
   },
   filters: {
     dateFormat(date) {
-      return moment(date).format('YYYY-MM-DD');
+      return moment(date).format("YYYY-MM-DD");
     },
     getWeekFormat(date) {
       const weeksObj = {
-        1: '周一',
-        2: '周二',
-        3: '周三',
-        4: '周四',
-        5: '周五',
-        6: '周六',
-        7: '周日'
+        1: "周一",
+        2: "周二",
+        3: "周三",
+        4: "周四",
+        5: "周五",
+        6: "周六",
+        7: "周日"
       };
       let weekNumber = moment(date).isoWeekday();
       return weeksObj[weekNumber];
@@ -83,10 +82,11 @@ export default {
   },
 
   mounted() {
-    const index = _.findIndex(this.days, function(o) {
-      return moment(o).dayOfYear() === moment().dayOfYear();
-    });
-    this.tabIndex = index;
+    // const index = _.findIndex(this.days, function(o) {
+    //   return moment(o).dayOfYear() === moment().dayOfYear();
+    // });
+    // this.tabIndex = index;
+    this.initcurrentIndex();
   },
 
   created() {
@@ -94,6 +94,17 @@ export default {
   },
 
   methods: {
+    initcurrentIndex(refresh) {
+      this.newDate = refresh || this.newDate;
+      let newDate = this.newDate;
+      let index = _.findIndex(this.days, function(o) {
+        return (
+          moment(o).format("YYYY-MM-DD") ===
+          moment(newDate).format("YYYY-MM-DD")
+        );
+      });
+      this.tabIndex = index;
+    },
     formatDate(year, month, day) {
       const y = year;
       let m = month;
@@ -102,19 +113,8 @@ export default {
       if (d < 10) d = `0${d}`;
       return `${y}-${m}-${d}`;
     },
-    pickDate(date) {
-      let that = this;
-      that.newDate = moment(date).format('YYYY-MM-DD');
-      that.$emit('dateValue', that.newDate);
-      console.log('this.newDate: ', that.newDate);
-      that.initData(that.newDate);
-      const index = _.findIndex(that.days, function(o) {
-        return o.getDate() === new Date(that.newDate).getDate();
-      });
-      this.tabIndex = index;
-    },
     initData(cur) {
-      let date = '';
+      let date = "";
       if (cur) {
         date = new Date(cur);
       } else {
@@ -148,18 +148,21 @@ export default {
       const d = this.days[0];
       d.setDate(d.getDate() - 7);
       this.initData(d);
+      this.initcurrentIndex();
     },
     weekNext() {
       const d = this.days[6];
       d.setDate(d.getDate() + 7);
       this.initData(d);
+      this.initcurrentIndex();
     },
     pick(date, index) {
-      this.newDate = moment(date).format('YYYY-MM-DD');
-      this.$emit('dateValue', this.newDate);
-      console.log('this.newDate: ', this.newDate);
-      console.log('index: ', index);
-      this.tabIndex = index;
+      this.newDate = moment(date).format("YYYY-MM-DD");
+      this.$emit("dateValue", this.newDate);
+      console.log("this.newDate: ", this.newDate);
+      console.log("index: ", index);
+      // this.tabIndex = index;
+      this.initcurrentIndex();
     }
   }
 };
@@ -227,6 +230,7 @@ export default {
 }
 .date .days {
   display: flex;
+  height: 57px;
 }
 .date .days .arr-right {
   width: 7px;
